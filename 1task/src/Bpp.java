@@ -7,7 +7,7 @@ public class Bpp {
         Scanner in = new Scanner(System.in);
         ArrayList<BigDecimal> ans = new ArrayList<>();
         try {
-            while (in.hasNextLine()) {
+            while (in.hasNext()) {
                 Double v = in.nextDouble();
                 Double u = in.nextDouble();
                 String oper = in.nextLine();
@@ -28,18 +28,20 @@ public class Bpp {
                     ans.add(a.remainder(b));
                 } else if (oper.contains("POW")) {
                     ans.add(a.pow(Integer.parseInt(b.toString())));
+                } else {
+                    System.out.println("Некорректный ввод операции!");
+                    System.exit(0);
                 }
             }
         } catch (Exception e) {
-            System.out.printf("Некорректный ввод данных!\n(%d)\n", e.getMessage());
+            System.out.printf("Некорректный ввод данных!\n%d\n", e.getMessage());
             System.exit(0);
-        }
-        finally {
+        } finally {
+            System.out.println("Вывод результата операций:");
             for (BigDecimal el : ans) {
                 System.out.println(el);
             }    
         }
-
         in.close();
     }
 }
