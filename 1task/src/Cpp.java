@@ -1,3 +1,4 @@
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
@@ -63,11 +64,24 @@ public class Cpp {
 		}
 	}
 
+    public static void writeToFile(ArrayList<String> ans) {
+        try {
+            FileWriter writer = new FileWriter("tests/output.txt");
+            for (String el : ans) {
+                writer.write(el + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Ошибка при записи в файл!");
+            e.printStackTrace();
+        } finally {
+            System.out.println("Результат был успешно записан в файл tests/output.txt");
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         ArrayList<String[]> res = readFromFile("tests/input.txt");
         ArrayList<String> ans = stringProcessing(res);
-        for (String el : ans) {
-            System.out.println(el);
-        }
+        writeToFile(ans);
     }
 }
