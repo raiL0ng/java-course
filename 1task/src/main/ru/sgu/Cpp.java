@@ -1,3 +1,4 @@
+package main.ru.sgu;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -6,17 +7,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Cpp {
-
-    // private String readFile(InputStream inputStream) throws IOException {
-    //     StringBuilder resultStringBuilder = new StringBuilder();
-    //     try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
-    //         String line;
-    //         while ((line = br.readLine()) != null) {
-    //             resultStringBuilder.append(line).append("\n");
-    //         }
-    //     }
-    //     return resultStringBuilder.toString();
-    // }
 
     public static ArrayList<String> stringProcessing(ArrayList<String[]> data) {
         ArrayList<String> res = new ArrayList<>();
