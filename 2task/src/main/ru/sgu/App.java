@@ -79,7 +79,7 @@ public class App {
         
         cntDays = cntDays.subtract(new BigInteger(Integer.toString(countDaysInOneYear(mindate))));
         System.out.println("after mindate " + cntDays);
-        cntDays = cntDays.subtract(d.subtract(new BigInteger(Integer.toString(countDaysInOneYear(maxdate)))));    
+        cntDays = cntDays.subtract(d.subtract(new BigInteger(Integer.toString(countDaysInOneYear(maxdate) - 1))));    
         return cntDays;
     }
     public static void main(String[] args) throws Exception {
@@ -89,7 +89,7 @@ public class App {
         System.out.println("Максимальная дата:");
         int[] maxdate = dateParser(in);
         BigInteger ans = getResult(mindate, maxdate);
-        System.out.println("Количество дней между данным временным промежутком:\n " + ans);
+        System.out.println("Количество дней между данным временным промежутком:\n" + ans);
         in.close();
 
     }
