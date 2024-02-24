@@ -1,4 +1,5 @@
 import main.ru.sgu.App;
+import main.ru.sgu.Bpp;
 
 import java.util.Scanner;
 
@@ -21,7 +22,14 @@ public class Main {
                     a.run();
                 }   
                 else if (bl == 2) {
-                    
+                    System.out.print("Введите название архивируемой директории: ");
+                    String path = in.next();
+                    System.out.print("Введите имя целевой строки: ");
+                    String target = in.next();
+                    System.out.println("Начало архивации...");
+                    if (new Bpp(path, target).run()) {
+                        System.out.println("Архивация прошла успешно");
+                    }
                 }
                 else if (bl == 3) {
                     break;

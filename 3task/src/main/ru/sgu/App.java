@@ -10,6 +10,47 @@ import java.util.Scanner;
 
 public class App {
 
+    public class MergeSort {
+
+        public void mergeSort(ArrayList<RawData> arr) {
+            if (arr.size() <= 1) {
+                return;
+            }
+    
+            int middle = arr.size() / 2;
+            ArrayList<RawData> left = new ArrayList<>(arr.subList(0, middle));
+            ArrayList<RawData> right = new ArrayList<>(arr.subList(middle, arr.size()));
+    
+            mergeSort(left);
+            mergeSort(right);
+    
+            merge(left, right, arr);
+        }
+    
+        private void merge(ArrayList<RawData> left, ArrayList<RawData> right, ArrayList<RawData> arr) {
+            int i = 0;
+            int j = 0;
+            int k = 0;
+    
+            while (i < left.size() && j < right.size()) {
+                if (left.get(i).isMore(right.get(j))) {
+                    arr.set(k++, left.get(i++));
+                } else {
+                    arr.set(k++, right.get(j++));
+                }
+            }
+    
+            while (i < left.size()) {
+                arr.set(k++, left.get(i++));
+            }
+    
+            while (j < right.size()) {
+                arr.set(k++, right.get(j++));
+            }
+        }
+    
+    }
+
     public class RawData {
         private String surname, name, patronymic, companyName;
         int rating;
@@ -39,77 +80,103 @@ public class App {
             this.rating = rating;
         }
 
-        public boolean compare(RawData o) {
-            return false;
+        public String getSurname() {
+            return this.surname;
+        }
+        public boolean isMore(RawData o) {
+            if (this.rating == o.rating) {
+                if (this.surname.equals(o.surname)) {
+                    if ((this.name == "" && o.name == "") || this.name != "" && o.name == "")
+                        return false;
+                    if (this.name == "" && o.name != "")
+                        return true;
+                    if (this.name.equals(o.name)) {
+                        if ((this.patronymic == "" && o.patronymic == "") ||
+                            (this.patronymic != "" && o.patronymic == ""))
+                            return false;
+                        if (this.patronymic == "" && o.patronymic != "")
+                            return true;
+                        return this.patronymic.compareTo(o.patronymic) < 0; 
+                    } else
+                        return this.name.compareTo(o.name) > 0;
+                } else 
+                    return this.surname.compareTo(o.surname) < 0;
+            } else {
+                return this.rating > o.rating;
+            }
+        }
+
+        public String getInf() {
+            if (this.patronymic == "")
+                return this.surname + " " + this.name + " " +
+                       this.companyName + " " + 
+                       Integer.toString(this.rating);   
+            if (this.name == "")
+                return this.surname + " " + this.companyName + " " + 
+                       Integer.toString(this.rating);
+            return this.surname + " " + this.name + " " +
+                   this.patronymic + " " + this.companyName + " " + 
+                   Integer.toString(this.rating);
         }
     }
-    public ArrayList<String[]> data;
+
+    public ArrayList<RawData> data;
 
     public App(String filename) {
-        data = readFromFile(filename);
+        readFromFile(filename);
     }
 
     public void run() {
-        if (data != null) {
-            ArrayList<String> ans = stringProcessing(data);
-            writeToFile(ans);
+        
+        if (!data.isEmpty()) {
+            MergeSort ms = new MergeSort();
+            ms.mergeSort(data);
+            writeToFile(data);
         }
     }
 
-     public ArrayList<String> stringProcessing(ArrayList<String[]> data) {
-        ArrayList<String> res = new ArrayList<>();
-        StringBuilder row = new StringBuilder();
-        int cnt = 0;
-        for (int i = 0; i < data.size(); i++) {
-            row.setLength(0);
-            cnt = 0;
-            for (String el : data.get(i)) {
-                if (el.length() < 3)
-                    break;
-                if (cnt >= 3) {
-                    break;
-                } else if (cnt == 0 || cnt == 2) {
-                    row.append(el.charAt(0) + ". ");
-                } else if (cnt == 1) {
-                    row.insert(0, el + " ");
-                }
-                cnt++;
-            }
-            if (cnt < 3) {
-                res.add("...не удалось обработать строку...");
-            } else {
-                res.add(row.toString());
-            }
+     private RawData stringProcessing(String[] data) {
+        int n = data.length;
+        int r = Integer.valueOf(data[n - 1]);
+        if (r < 1 || r > 10)
+            return new RawData(null, null, -1);
+        if (n == 5) {
+            return new RawData( data[0], data[1], data[2]
+                              , data[3], r);        
         }
-        return res;
+        if (n == 4)
+            return new RawData(data[0], data[1], data[2], r);
+        if (n == 3)
+            return new RawData(data[0], data[1], r);
+        return new RawData(null, null, -1);
     }
 
-    private ArrayList<String[]> readFromFile(String fileName) {
+    private void readFromFile(String fileName) {
 		Scanner scanner = null;
 		try {
-            ArrayList<String[]> data = new ArrayList<>();
+            data = new ArrayList<>();
 			scanner = new Scanner(Paths.get(fileName), StandardCharsets.UTF_8.name());
+            RawData el;
             while (scanner.hasNextLine()) {
-                data.add(scanner.nextLine().split(" "));
-                for (String el : data.get(data.size() - 1))
-                    System.out.print(el + " ");
-                System.out.println("");
+                el = stringProcessing(scanner.nextLine().split(" "));
+                if (el.getSurname() != null) {
+                    data.add(el);
+                }
             }
-			return data;
 		} catch (IOException e) {
 			System.out.println("Ошибка считывания с файла `" + fileName + "`");
-			return null;
+			data.clear();
 		} finally {
 			if (scanner != null)
 				scanner.close();
 		}
 	}
 
-    public void writeToFile(ArrayList<String> ans) {
+    private void writeToFile(ArrayList<RawData> ans) {
         try {
             FileWriter writer = new FileWriter("tests/output.txt");
-            for (String el : ans) {
-                writer.write(el + "\n");
+            for (RawData el : ans) {
+                writer.write(el.getInf() + "\n");
             }
             writer.close();
         } catch (IOException e) {
