@@ -4,10 +4,10 @@ import java.util.Random;
 
 public class Cpp {
 
-    public static Random rand = new Random();
-    public static int len = 10;
+    public Random rand = new Random();
+    public int len = 10;
 
-    public static String getRandomString() {
+    public String getRandomString() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         Random random = new Random();
@@ -19,27 +19,27 @@ public class Cpp {
         return sb.toString();
     }
 
-    public static void stringGeneration1() {
+    public void stringGeneration1() {
         String example1 = new String();
         for (int i = 0; i < 100000; i++) {
             example1 += getRandomString();
         }
     }
 
-    public static void stringGeneration2() {
+    public void stringGeneration2() {
         StringBuilder example2 = new StringBuilder();
         for (int i = 0; i < 100000; i++) {
             example2.append(getRandomString());
         }
     }
 
-    public static void stringGeneration3() {
+    public void stringGeneration3() {
         StringBuffer example3 = new StringBuffer();
         for (int i = 0; i < 100000; i++) {
             example3.append(getRandomString());
         }
     }
-    public static void main(String[] args) throws Exception {
+    public void run() {
         long start = System.currentTimeMillis();
         stringGeneration1();
         System.out.println("Время выполнения (String): " + ((System.currentTimeMillis() - start)));

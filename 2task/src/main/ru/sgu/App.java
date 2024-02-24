@@ -5,19 +5,9 @@ import java.util.Scanner;
 
 public class App {
 
-    static class Pair<X, Y> {
-        public X first;
-        public Y second;
+    private int[] monthsDays = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-        public Pair(X first, Y second) {
-            this.first = first;
-            this.second = second;
-        }
-    }
-
-    private static int[] monthsDays = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-    public static int[] dateParser(Scanner in) {
+    public int[] dateParser(Scanner in) {
         int[] date = new int[3];
         try {
             int tmp;
@@ -28,7 +18,7 @@ public class App {
                         date[i] = tmp;
                     else {
                         System.out.println("Некорректный ввод даты (неверно введен год)!");
-                        System.exit(0);
+                        return new int[] {-1};
                     }
                 }
                 if (i == 1) {
@@ -36,7 +26,7 @@ public class App {
                         date[i] = tmp;
                     else {
                         System.out.println("Некорректный ввод даты (неверно введен месяц)!");
-                        System.exit(0);
+                        return new int[] {-1};
                     }
                 }
                 if (i == 2) {
@@ -44,7 +34,8 @@ public class App {
                         date[i] = tmp;
                     else {
                         System.out.println("Некорректный ввод даты (неверно введен день)!");
-                        System.exit(0);
+                        return new int[] {-1};
+
 
                     }
                 }
@@ -52,12 +43,12 @@ public class App {
 
         } catch (Exception e) {
             System.out.println("Некорректный ввод даты!");
-            System.exit(0);
+            return new int[] {-1};
         }
         return date;
     }
 
-    public static int countDaysInOneYear(int[] date) {
+    public int countDaysInOneYear(int[] date) {
         int days = 0;
         for (int i = 1; i < date[1]; i++) {
             days += monthsDays[i];
@@ -69,7 +60,7 @@ public class App {
         return days;
     }
 
-    public static BigInteger getResult(int[] mindate, int[] maxdate) {
+    public BigInteger getResult(int[] mindate, int[] maxdate) {
         BigInteger cntDays = BigInteger.ZERO, d = new BigInteger("365");
         for (int year = 0; year < maxdate[0] - mindate[0] + 1; year++) {
             cntDays = cntDays.add(d);
@@ -82,12 +73,17 @@ public class App {
         cntDays = cntDays.subtract(d.subtract(new BigInteger(Integer.toString(countDaysInOneYear(maxdate) - 1))));    
         return cntDays;
     }
-    public static void main(String[] args) throws Exception {
+
+    public void run() {
         System.out.println("Введите даты в формате \"год меяц день\":\nМинимальная дата:");
         Scanner in = new Scanner(System.in);
         int[] mindate = dateParser(in);
+        if (mindate[0] == -1)
+            return;
         System.out.println("Максимальная дата:");
         int[] maxdate = dateParser(in);
+        if (maxdate[0] == -1)
+            return;
         BigInteger ans = getResult(mindate, maxdate);
         System.out.println("Количество дней между данным временным промежутком:\n" + ans);
         in.close();

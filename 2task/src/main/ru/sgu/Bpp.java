@@ -4,9 +4,10 @@ import java.util.Scanner;
 
 public class Bpp {
 
-    public static String[] daysOfWeek = { "null", "monday", "tuesday", "wednesday", "thursday"
+    public String[] daysOfWeek = { "null", "monday", "tuesday", "wednesday", "thursday"
                           , "friday", "saturday", "sunday" };
-    public static boolean dataCheck(String dayOfWeek, int num) {
+    
+    public boolean dataCheck(String dayOfWeek, int num) {
         boolean fl = false;
         for (int i = 0; i < 8; i++) {
             if (dayOfWeek.equals(daysOfWeek[i]))
@@ -17,7 +18,7 @@ public class Bpp {
         return true; 
     } 
 
-    public static void main(String[] args) throws Exception {
+    public void run() {
         System.out.println("Введите имя дня недели и количество дней:");
         Scanner in = new Scanner(System.in);
         String newDay, dayOfWeek = in.next().toLowerCase();
