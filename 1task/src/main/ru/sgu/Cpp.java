@@ -69,7 +69,7 @@ public class Cpp {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public void run() {
         ArrayList<String[]> res = readFromFile("tests/input.txt");
         ArrayList<String> ans = stringProcessing(res);
         writeToFile(ans);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Bpp {
-    public static void main(String[] args) throws Exception {
+    public void run () {
         Scanner in = new Scanner(System.in);
         ArrayList<BigDecimal> ans = new ArrayList<>();
         try {
@@ -31,18 +31,17 @@ public class Bpp {
                     ans.add(a.pow(Integer.parseInt(b.toString())));
                 } else {
                     System.out.println("Некорректный ввод операции!");
-                    System.exit(0);
+                    return;
                 }
             }
         } catch (Exception e) {
             System.out.printf("Некорректный ввод данных!\n%d\n", e.getMessage());
-            System.exit(0);
-        } finally {
-            System.out.println("Вывод результата операций:");
-            for (BigDecimal el : ans) {
-                System.out.println(el);
-            }    
-        }
+            return;
+        } 
+        System.out.println("Вывод результата операций:");
+        for (BigDecimal el : ans) {
+            System.out.println(el);
+        }    
         in.close();
     }
 }
