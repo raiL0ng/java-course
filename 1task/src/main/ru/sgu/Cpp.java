@@ -1,4 +1,5 @@
 package main.ru.sgu;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -6,9 +7,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Cpp {
 
-    public static ArrayList<String> stringProcessing(ArrayList<String[]> data) {
+    private ArrayList<String> stringProcessing(ArrayList<String[]> data) {
         ArrayList<String> res = new ArrayList<>();
         StringBuilder row = new StringBuilder();
         int cnt = 0;
@@ -36,7 +38,7 @@ public class Cpp {
         return res;
     }
 
-    private static ArrayList<String[]> readFromFile(String fileName) {
+    private ArrayList<String[]> readFromFile(String fileName) {
 		Scanner scanner = null;
 		try {
             ArrayList<String[]> data = new ArrayList<>();
@@ -44,17 +46,18 @@ public class Cpp {
             while (scanner.hasNextLine()) {
                 data.add(scanner.nextLine().split(" "));
             }
+            
 			return data;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		} finally {
 			if (scanner != null)
-				scanner.close();
+                scanner.close();
 		}
 	}
 
-    public static void writeToFile(ArrayList<String> ans) {
+    private void writeToFile(ArrayList<String> ans) {
         try {
             FileWriter writer = new FileWriter("tests/output.txt");
             for (String el : ans) {

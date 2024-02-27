@@ -1,7 +1,9 @@
 package main.ru.sgu;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class Bpp {
     public void run () {
@@ -28,14 +30,16 @@ public class Bpp {
                 } else if (oper.contains("REM")) {
                     ans.add(a.remainder(b));
                 } else if (oper.contains("POW")) {
-                    ans.add(a.pow(Integer.parseInt(b.toString())));
+                    int tmp = Integer.parseInt(b.toString());
+                    ans.add(a.pow(tmp));
                 } else {
                     System.out.println("Некорректный ввод операции!");
+                    in.close();
                     return;
                 }
             }
         } catch (Exception e) {
-            System.out.printf("Некорректный ввод данных!\n%d\n", e.getMessage());
+            System.out.println("Некорректный ввод данных!");
             return;
         } 
         System.out.println("Вывод результата операций:");
