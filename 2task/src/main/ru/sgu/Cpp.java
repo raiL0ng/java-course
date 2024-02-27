@@ -5,7 +5,7 @@ import java.util.Random;
 public class Cpp {
 
     public Random rand = new Random();
-    public int len = 10;
+    public final int len = 10;
 
     public String getRandomString() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -18,7 +18,7 @@ public class Cpp {
         }
         return sb.toString();
     }
-
+    // поменять названия
     public void stringGeneration1() {
         String example1 = new String();
         for (int i = 0; i < 100000; i++) {
@@ -43,9 +43,11 @@ public class Cpp {
         long start = System.currentTimeMillis();
         stringGeneration1();
         System.out.println("Время выполнения (String): " + ((System.currentTimeMillis() - start)));
+        
         start = System.currentTimeMillis();
         stringGeneration2();
         System.out.println("Время выполнения (StringBuilder): " + ((System.currentTimeMillis() - start)));
+        
         start = System.currentTimeMillis();
         stringGeneration3();
         System.out.println("Время выполнения (StringBuffer): " + ((System.currentTimeMillis() - start)));

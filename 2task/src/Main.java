@@ -18,7 +18,7 @@ public class Main {
                 System.out.print("Выберите опцию: ");
                 int bl = in.nextInt();
                 if (bl == 1) {
-                    App a = new App();
+                    App a = new App(in);
                     a.run();
                 }   
                 else if (bl == 2) {

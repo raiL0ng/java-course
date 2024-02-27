@@ -5,6 +5,11 @@ import java.util.Scanner;
 
 public class App {
 
+    private Scanner in;
+    public App(Scanner in) {
+        this.in = in;
+    }
+
     private int[] monthsDays = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     public int[] dateParser(Scanner in) {
@@ -56,7 +61,6 @@ public class App {
                 days++;
         }
         days += date[2];
-        System.out.println("days=" + days);
         return days;
     }
 
@@ -69,15 +73,13 @@ public class App {
         }
         
         cntDays = cntDays.subtract(new BigInteger(Integer.toString(countDaysInOneYear(mindate))));
-        System.out.println("after mindate " + cntDays);
         cntDays = cntDays.subtract(d.subtract(new BigInteger(Integer.toString(countDaysInOneYear(maxdate) - 1))));    
         return cntDays;
     }
 
     public void run() {
         System.out.println("Введите даты в формате \"год меяц день\":\nМинимальная дата:");
-        Scanner in = new Scanner(System.in);
-        int[] mindate = dateParser(in);
+        int[] mindate = dateParser(this.in);
         if (mindate[0] == -1)
             return;
         System.out.println("Максимальная дата:");

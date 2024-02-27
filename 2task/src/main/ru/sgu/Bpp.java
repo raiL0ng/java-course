@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Bpp {
 
-    public String[] daysOfWeek = { "null", "monday", "tuesday", "wednesday", "thursday"
+    public String[] daysOfWeek = { "monday", "tuesday", "wednesday", "thursday"
                           , "friday", "saturday", "sunday" };
     
     public boolean dataCheck(String dayOfWeek, int num) {
@@ -25,8 +25,8 @@ public class Bpp {
         int num = in.nextInt();
         if (dataCheck(dayOfWeek, num)) {
             newDay = daysOfWeek[num % 7];
-            if (newDay.equals("null"))
-                newDay = dayOfWeek;
+            // if (newDay.equals(null))
+            //     newDay = dayOfWeek;
             System.out.printf("Через %s дней(-я) будет следующий день недели:\n%s\n", num, newDay);
         }
         in.close();
