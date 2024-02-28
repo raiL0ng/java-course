@@ -18,7 +18,8 @@ public class Main {
                 if (bl == 1) {
                     System.out.println("Введите имя файла:");
                     String filename = in.next();
-                    App a = new App(filename);
+                    App a = new App();
+                    a.processFile(filename);
                     a.run();
                 }   
                 else if (bl == 2) {

@@ -83,6 +83,7 @@ public class App {
         public String getSurname() {
             return this.surname;
         }
+        
         public boolean isMore(RawData o) {
             if (this.rating == o.rating) {
                 if (this.surname.equals(o.surname)) {
@@ -122,9 +123,6 @@ public class App {
 
     public ArrayList<RawData> data;
 
-    public App(String filename) {
-        readFromFile(filename);
-    }
 
     public void run() {
         
@@ -135,7 +133,7 @@ public class App {
         }
     }
 
-     private RawData stringProcessing(String[] data) {
+     private RawData stringFormatting(String[] data) {
         int n = data.length;
         int r = Integer.valueOf(data[n - 1]);
         if (r < 1 || r > 10)
@@ -148,18 +146,18 @@ public class App {
             return new RawData(data[0], data[1], data[2], r);
         if (n == 3)
             return new RawData(data[0], data[1], r);
-        return new RawData(null, null, -1);
+        return null;
     }
 
-    private void readFromFile(String fileName) {
+    public void processFile(String fileName) {
 		Scanner scanner = null;
 		try {
             data = new ArrayList<>();
 			scanner = new Scanner(Paths.get(fileName), StandardCharsets.UTF_8.name());
             RawData el;
             while (scanner.hasNextLine()) {
-                el = stringProcessing(scanner.nextLine().split(" "));
-                if (el.getSurname() != null) {
+                el = stringFormatting(scanner.nextLine().split(" "));
+                if (el != null) {
                     data.add(el);
                 }
             }
@@ -171,7 +169,7 @@ public class App {
 				scanner.close();
 		}
 	}
-
+    // buffered writer
     private void writeToFile(ArrayList<RawData> ans) {
         try {
             FileWriter writer = new FileWriter("tests/output.txt");

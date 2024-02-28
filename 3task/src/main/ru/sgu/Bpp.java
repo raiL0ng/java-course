@@ -15,6 +15,7 @@ public class Bpp {
 
     public Bpp(String dirName, String target) {
         this.workingDir = new File(dirName);
+        // убрать в отдельный метод
         if (!workingDir.isDirectory()) {
             System.out.printf("Директории `%s` не существует или неверно " + 
                               "указан к ней путь%n", workingDir);
