@@ -6,46 +6,82 @@ import java.util.Scanner;
 
 
 public class Bpp {
-    public void run () {
-        Scanner in = new Scanner(System.in);
-        ArrayList<BigDecimal> ans = new ArrayList<>();
+
+    // public enum ArifmOpers {
+
+    //     ADD("ADD"),
+    //     SUB("SUB"),
+    //     MULT("MULT"),
+    //     DIV("DIV"),
+    //     REM("REM"),
+    //     MOD("MOD");
+        
+    //     private String oper;
+        
+    //     ArifmOpers(String oper) {
+    //         this.oper = oper;
+    //     }
+
+
+
+
+    // }
+
+    private BigDecimal getResult(String[] opers) {
+        BigDecimal res = null;
         try {
-            while (in.hasNext()) {
-                Double v = in.nextDouble();
-                Double u = in.nextDouble();
-                String oper = in.nextLine();
-                BigDecimal a = new BigDecimal(v);
-                BigDecimal b = new BigDecimal(u);
-                if (oper.length() == 0) {
+
+            if (opers.length != 3)
+                return null;
+            BigDecimal a = new BigDecimal(opers[0]);
+            BigDecimal b = new BigDecimal(opers[1]);
+            switch (opers[2]) {
+                case "ADD":
+                    res = a.add(b);
                     break;
-                }
-                if (oper.contains("ADD")) {
-                    ans.add(a.add(b));
-                } else if (oper.contains("SUB")) {
-                    ans.add(a.subtract(b));
-                } else if (oper.contains("MULT")) {
-                    ans.add(a.multiply(b));
-                } else if (oper.contains("DIV")) {
-                    ans.add(a.divide(b));
-                } else if (oper.contains("REM")) {
-                    ans.add(a.remainder(b));
-                } else if (oper.contains("POW")) {
+                case "SUB":
+                    res = a.subtract(b);
+                    break;
+                case "MULT":
+                    res = a.multiply(b);
+                    break;
+                case "DIV":
+                    res = a.divide(b);
+                    break;
+                case "REM":
+                    res = a.remainder(b);
+                    break;
+                case "POW":
                     int tmp = Integer.parseInt(b.toString());
-                    ans.add(a.pow(tmp));
-                } else {
-                    System.out.println("Некорректный ввод операции!");
-                    in.close();
-                    return;
-                }
+                    res = a.pow(tmp);
+                default:
+                    break;
             }
         } catch (Exception e) {
-            System.out.println("Некорректный ввод данных!");
-            return;
-        } 
+            return null;
+        }
+        return res;
+    }
+
+    public void run() {
+        Scanner in = new Scanner(System.in);
+        ArrayList<BigDecimal> ans = new ArrayList<>();
+            System.out.println("Введите операцию в формате \"число1 число2 операция\":");
+            while (in.hasNext()) {
+                String[] row = in.nextLine().split(" ");
+                BigDecimal res = getResult(row);
+                // System.out.println(res);
+                if (res != null) {
+                    ans.add(res);
+                }
+                else {
+                    System.out.println("Некорректный ввод данных!");
+                }
+            }
         System.out.println("Вывод результата операций:");
         for (BigDecimal el : ans) {
             System.out.println(el);
-        }    
-        in.close();
+        }
+        // in.close(); 
     }
 }

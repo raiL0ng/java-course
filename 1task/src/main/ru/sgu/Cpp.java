@@ -10,6 +10,14 @@ import java.util.Scanner;
 
 public class Cpp {
 
+    private boolean spellCheck(String word) {
+        for (int j = 0; j < word.length(); j++) {
+            if (!Character.isLetter(word.charAt(j))) {
+                return false;
+            }
+        }
+        return true;
+    }
     private ArrayList<String> stringProcessing(ArrayList<String[]> data) {
         ArrayList<String> res = new ArrayList<>();
         StringBuilder row = new StringBuilder();
@@ -18,19 +26,25 @@ public class Cpp {
             row.setLength(0);
             cnt = 0;
             for (String el : data.get(i)) {
-                if (el.length() < 3)
+                if (el.length() < 2)
                     break;
                 if (cnt >= 3) {
                     break;
                 } else if (cnt == 0 || cnt == 2) {
-                    row.append(el.charAt(0) + ". ");
+                    if (spellCheck(el))
+                        row.append(el.charAt(0) + ". ");
+                    else
+                        cnt--;
                 } else if (cnt == 1) {
-                    row.insert(0, el + " ");
+                    if (spellCheck(el))
+                        row.insert(0, el + " ");
+                    else
+                        cnt--;
                 }
                 cnt++;
             }
             if (cnt < 3) {
-                res.add("...не удалось обработать строку...");
+                res.add("");
             } else {
                 res.add(row.toString());
             }
