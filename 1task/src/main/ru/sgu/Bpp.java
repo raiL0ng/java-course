@@ -7,26 +7,6 @@ import java.util.Scanner;
 
 public class Bpp {
 
-    // public enum ArifmOpers {
-
-    //     ADD("ADD"),
-    //     SUB("SUB"),
-    //     MULT("MULT"),
-    //     DIV("DIV"),
-    //     REM("REM"),
-    //     MOD("MOD");
-        
-    //     private String oper;
-        
-    //     ArifmOpers(String oper) {
-    //         this.oper = oper;
-    //     }
-
-
-
-
-    // }
-
     private BigDecimal getResult(String[] opers) {
         BigDecimal res = null;
         try {
@@ -70,7 +50,6 @@ public class Bpp {
             while (in.hasNext()) {
                 String[] row = in.nextLine().split(" ");
                 BigDecimal res = getResult(row);
-                // System.out.println(res);
                 if (res != null) {
                     ans.add(res);
                 }
