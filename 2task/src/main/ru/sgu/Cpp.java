@@ -4,52 +4,56 @@ import java.util.Random;
 
 public class Cpp {
 
-    public Random rand = new Random();
-    public final int len = 10;
+    private Random rand = new Random();
+    private final int len = 10;
 
-    public String getRandomString() {
+    private String getRandomString() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        Random random = new Random();
         StringBuilder sb = new StringBuilder(len);
         for (int i = 0; i < len; i++) {
-            int index = random.nextInt(characters.length());
+            int index = this.rand.nextInt(characters.length());
             sb.append(characters.charAt(index));
         }
         return sb.toString();
     }
-    // поменять названия
-    public void stringGeneration1() {
-        String example1 = new String();
+
+
+    private void classStringGeneration() {
+        String str = new String();
         for (int i = 0; i < 100000; i++) {
-            example1 += getRandomString();
+            str += getRandomString();
         }
     }
 
-    public void stringGeneration2() {
-        StringBuilder example2 = new StringBuilder();
+
+    private void classStringBuilderGeneration() {
+        StringBuilder str = new StringBuilder();
         for (int i = 0; i < 100000; i++) {
-            example2.append(getRandomString());
+            str.append(getRandomString());
         }
     }
 
-    public void stringGeneration3() {
-        StringBuffer example3 = new StringBuffer();
+
+    private void classStringBufferGeneration() {
+        StringBuffer str = new StringBuffer();
         for (int i = 0; i < 100000; i++) {
-            example3.append(getRandomString());
+            str.append(getRandomString());
         }
     }
+
+
     public void run() {
         long start = System.currentTimeMillis();
-        stringGeneration1();
+        classStringGeneration();
         System.out.println("Время выполнения (String): " + ((System.currentTimeMillis() - start)));
         
         start = System.currentTimeMillis();
-        stringGeneration2();
+        classStringBuilderGeneration();
         System.out.println("Время выполнения (StringBuilder): " + ((System.currentTimeMillis() - start)));
         
         start = System.currentTimeMillis();
-        stringGeneration3();
+        classStringBufferGeneration();
         System.out.println("Время выполнения (StringBuffer): " + ((System.currentTimeMillis() - start)));
     }
 }

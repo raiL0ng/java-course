@@ -1,35 +1,57 @@
 package main.ru.sgu;
 
-import java.util.Scanner;
 
 public class Bpp {
 
-    public String[] daysOfWeek = { "monday", "tuesday", "wednesday", "thursday"
-                          , "friday", "saturday", "sunday" };
+    private String dayOfWeek;
+    private int num;
     
-    public boolean dataCheck(String dayOfWeek, int num) {
-        boolean fl = false;
-        for (int i = 0; i < 8; i++) {
-            if (dayOfWeek.equals(daysOfWeek[i]))
-                fl = true;
+    public Bpp(String day, int num) {
+        this.dayOfWeek = day;
+        this.num = num;
+    }
+
+
+    private enum DaysOfWeek {
+        
+        monday ("monday"),
+        tuesday("tuesday"),
+        wednesday("wednesday"),
+        thursday("thursday"),
+        friday("friday"),
+        saturday("saturday"),
+        sunday("sunday");
+
+        String dayOfWeek;
+
+        DaysOfWeek(String d) {
+            this.dayOfWeek = d;
         }
-        if (!fl || num < 0)
-            return false;
-        return true; 
-    } 
+
+        public DaysOfWeek calculate(int num) {
+            return DaysOfWeek.values()[(this.ordinal() + num) % 7]; 
+        }
+        
+    }
+    
+    private boolean weekdayCheck() {
+        for (DaysOfWeek el : DaysOfWeek.values()) {
+            System.out.println(el.dayOfWeek);
+            if (el.dayOfWeek.equals(this.dayOfWeek)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void run() {
-        System.out.println("Введите имя дня недели и количество дней:");
-        Scanner in = new Scanner(System.in);
-        String newDay, dayOfWeek = in.next().toLowerCase();
-        int num = in.nextInt();
-        if (dataCheck(dayOfWeek, num)) {
-            newDay = daysOfWeek[num % 7];
-            // if (newDay.equals(null))
-            //     newDay = dayOfWeek;
-            System.out.printf("Через %s дней(-я) будет следующий день недели:\n%s\n", num, newDay);
+        if (weekdayCheck()) {
+            DaysOfWeek dow = DaysOfWeek.valueOf(this.dayOfWeek) ;
+            System.out.printf("\nЧерез %s дней(-я) будет следующий день недели:\n%s\n", num, dow.calculate(this.num));
         }
-        in.close();
+        else {
+            System.out.println("\nНекорректный ввод данных!");
+        }
 
     }
 }

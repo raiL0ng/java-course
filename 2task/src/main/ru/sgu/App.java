@@ -1,94 +1,45 @@
 package main.ru.sgu;
 
-import java.math.BigInteger;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class App {
 
-    private Scanner in;
-    public App(Scanner in) {
-        this.in = in;
+    private final LocalDate mindate, maxdate;
+
+
+    public App(String[] date1, String[] date2) {
+        this.mindate = dateParser(date1);
+        this.maxdate = dateParser(date2);
     }
 
-    private int[] monthsDays = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    public int[] dateParser(Scanner in) {
-        int[] date = new int[3];
+    private LocalDate dateParser(String[] strdate) {
+        if (strdate.length != 3) {
+            return null;
+        }
+        LocalDate date;
         try {
-            int tmp;
-            for (int i = 0; i < 3; i++) {
-                tmp = in.nextInt();
-                if (i == 0) {
-                    if (tmp > 0 && tmp < 10000)
-                        date[i] = tmp;
-                    else {
-                        System.out.println("Некорректный ввод даты (неверно введен год)!");
-                        return new int[] {-1};
-                    }
-                }
-                if (i == 1) {
-                    if (tmp > 0 && tmp < 13) 
-                        date[i] = tmp;
-                    else {
-                        System.out.println("Некорректный ввод даты (неверно введен месяц)!");
-                        return new int[] {-1};
-                    }
-                }
-                if (i == 2) {
-                    if (tmp > 0 && tmp < 32)
-                        date[i] = tmp;
-                    else {
-                        System.out.println("Некорректный ввод даты (неверно введен день)!");
-                        return new int[] {-1};
-
-
-                    }
-                }
-            }
-
+            int y, m, d;
+            y = Integer.parseInt(strdate[0]);
+            m = Integer.parseInt(strdate[1]);
+            d = Integer.parseInt(strdate[2]);
+            date = LocalDate.of(y, m, d);
         } catch (Exception e) {
-            System.out.println("Некорректный ввод даты!");
-            return new int[] {-1};
+            return null;
         }
         return date;
     }
 
-    public int countDaysInOneYear(int[] date) {
-        int days = 0;
-        for (int i = 1; i < date[1]; i++) {
-            days += monthsDays[i];
-            if (date[0] % 4 == 0 && i == 2)
-                days++;
-        }
-        days += date[2];
-        return days;
+
+    public boolean checkTrueDates() {
+        if (this.mindate == null || this.maxdate == null)
+            return false;
+        return true;
     }
 
-    public BigInteger getResult(int[] mindate, int[] maxdate) {
-        BigInteger cntDays = BigInteger.ZERO, d = new BigInteger("365");
-        for (int year = 0; year < maxdate[0] - mindate[0] + 1; year++) {
-            cntDays = cntDays.add(d);
-            if (year % 4 == 0)
-                cntDays = cntDays.add(BigInteger.ONE);
-        }
-        
-        cntDays = cntDays.subtract(new BigInteger(Integer.toString(countDaysInOneYear(mindate))));
-        cntDays = cntDays.subtract(d.subtract(new BigInteger(Integer.toString(countDaysInOneYear(maxdate) - 1))));    
-        return cntDays;
-    }
 
-    public void run() {
-        System.out.println("Введите даты в формате \"год меяц день\":\nМинимальная дата:");
-        int[] mindate = dateParser(this.in);
-        if (mindate[0] == -1)
-            return;
-        System.out.println("Максимальная дата:");
-        int[] maxdate = dateParser(in);
-        if (maxdate[0] == -1)
-            return;
-        BigInteger ans = getResult(mindate, maxdate);
-        System.out.println("Количество дней между данным временным промежутком:\n" + ans);
-        in.close();
-
+    public long getResult() {
+        return Math.abs(ChronoUnit.DAYS.between(this.mindate, this.maxdate));
     }
 }
