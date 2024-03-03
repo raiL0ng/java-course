@@ -1,4 +1,4 @@
 *.vscode/
 *lib/
 *.class
-*/dir-for-test/*
+3task/src/dir-for-test/*
