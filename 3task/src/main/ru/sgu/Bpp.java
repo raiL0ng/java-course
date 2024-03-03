@@ -15,51 +15,54 @@ public class Bpp {
 
     public Bpp(String dirName, String target) {
         this.workingDir = new File(dirName);
-        // убрать в отдельный метод
-        if (!workingDir.isDirectory()) {
-            System.out.printf("Директории `%s` не существует или неверно " + 
-                              "указан к ней путь%n", workingDir);
-        }
         this.target = target;
     }
 
-    private boolean isCorrectName(File file) {
-        return file.getName().toLowerCase().contains(target);
+
+    public boolean dirValidalityCheck() {
+        if (!workingDir.isDirectory()) {
+            System.out.printf("Директории `%s` не существует или неверно указан к ней путь%n", workingDir);
+            return false;
+        }
+        return true;
     }
 
-    private void runZip(ZipOutputStream zout, File curDir, boolean fl, String nextEntity)  {
+
+    private boolean isCorrectName(File file) {
+        return file.getName().toLowerCase().contains(target.toLowerCase());
+    }
+
+
+    private void runZip(ZipOutputStream zout, File curDir, String nextEntity) {
         System.out.printf("Архивирование директории '%s'%n", curDir.getName());
         for (File file : Objects.requireNonNull(curDir.listFiles())) {
             if (file.isDirectory()) {
                 if (isCorrectName(file)) {
-                    runZip(zout, file, true, "%s%s\\".formatted(nextEntity, file.getName()));
-                    continue;
+                    runZip(zout, file, "%s%s/".formatted(nextEntity, file.getName()));
                 }
-            }
-            if (!(fl || isCorrectName(file))) {
-                continue;
-            }
-            System.out.printf("- Архивирование файла '%s'%n", file.getName());
-
-            try (FileInputStream f = new FileInputStream(file)) {
-                zout.putNextEntry(new ZipEntry(nextEntity + file.getName()));
-                byte[] buffer = new byte[256];
-                int size;
-                while ((size = f.read()) > 0) {
-                    zout.write(buffer, 0, size);
+            } else {
+                if (isCorrectName(file)) {
+                    System.out.printf("- Архивирование файла '%s'%n", file.getName());
+                    try (FileInputStream fis = new FileInputStream(file)) {
+                        zout.putNextEntry(new ZipEntry(nextEntity + file.getName()));
+                        byte[] buffer = new byte[1024];
+                        int size;
+                        while ((size = fis.read(buffer)) > 0) {
+                            zout.write(buffer, 0, size);
+                        }
+                        zout.closeEntry();
+                    } catch (IOException e) {
+                        System.out.printf("Не удалось добавить сущность %s в архив%n", file.getName());
+                    }
                 }
-                zout.closeEntry();
-            } catch (IOException e) {
-                System.out.printf("Не удалось добавить сущность %s в архив%n", file.getName());
             }
         }
     }
 
     public boolean run() {
-        try  {
-            FileOutputStream fout = new FileOutputStream("%s.7z".formatted(this.workingDir.getName()));
-            ZipOutputStream zout = new ZipOutputStream(fout); 
-            runZip(zout, workingDir, false, "");
+        try (FileOutputStream fout = new FileOutputStream("%s.7z".formatted(this.workingDir.getName()));
+             ZipOutputStream zout = new ZipOutputStream(fout)) {
+            runZip(zout, workingDir, "");
         } catch (IOException e) {
             System.out.printf("Не удалось создать архив %s.7z%n", workingDir.getName());
             return false;
