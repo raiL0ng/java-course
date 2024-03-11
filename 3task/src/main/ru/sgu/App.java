@@ -89,7 +89,7 @@ public class App {
         @Override
         public boolean equals(Object obj) {
             if (this == obj) return true;
-            if (obj == null || getClass() != obj.getClass()) return false;
+            if (obj == null || this.getClass() != obj.getClass()) return false;
             DataFormatting other = (DataFormatting) obj;
             return Objects.equals(surname, other.surname) &&
                    Objects.equals(name, other.name) &&
@@ -145,12 +145,10 @@ public class App {
     public void processFile(String fileName) {
 		HashSet<DataFormatting> dataSet = new HashSet<>();
         try (Scanner scanner = new Scanner(Paths.get(fileName), StandardCharsets.UTF_8.name())){
-            System.out.println(fileName);
             dataSet = new HashSet<>();
             DataFormatting el;
             while (scanner.hasNextLine()) {
                 el = stringFormatting(scanner.nextLine().split(" "));
-                System.out.println(el);
                 if (el != null) {
                     dataSet.add(el);
                 }
@@ -162,7 +160,6 @@ public class App {
 	}
 
 
-    // buffered writer
     public void writeToFile(ArrayList<DataFormatting> ans) {
         try {
             FileWriter writer = new FileWriter("tests/output.txt");
