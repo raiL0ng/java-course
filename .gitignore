@@ -1,3 +1,5 @@
 *.vscode/
 *lib/
 *.class
+3task/src/dir-for-test/*
+*.7z
