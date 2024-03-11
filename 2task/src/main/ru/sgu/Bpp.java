@@ -36,7 +36,6 @@ public class Bpp {
     
     private boolean weekdayCheck() {
         for (DaysOfWeek el : DaysOfWeek.values()) {
-            System.out.println(el.dayOfWeek);
             if (el.dayOfWeek.equals(this.dayOfWeek)) {
                 return true;
             }

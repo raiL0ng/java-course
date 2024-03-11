@@ -14,18 +14,19 @@ public class Main {
             String bl = in.next();
             in.nextLine();
             if (bl.equals("1")) {
+                App a = new App();
                 System.out.println("Введите даты в формате \"год месяц день\":\nПервая дата:");
                 String[] date1 = in.nextLine().split(" ");
+                if (!a.getAndCheckFirstDate(date1)) {
+                    continue;
+                }
                 System.out.println("Вторая дата:");
                 String[] date2 = in.nextLine().split(" ");
-                App a = new App(date1, date2);
-                if (a.checkTrueDates()) {
-                    long ans = a.getResult();
-                    System.out.println("Количество дней между данным временным промежутком:\n" + ans);
+                if (!a.getAndCheckSecondDate(date2)) {
+                    continue;
                 }
-                else {
-                    System.out.println("\nНекорректный ввод данных!");
-                }
+                long ans = a.getResult();
+                System.out.println("Количество дней между данным временным промежутком:\n" + ans);
             }   
             else if (bl.equals("2")) {
                 System.out.println("Введите имя дня недели и количество дней:");

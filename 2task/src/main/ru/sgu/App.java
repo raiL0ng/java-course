@@ -1,17 +1,13 @@
 package main.ru.sgu;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+
 public class App {
 
-    private final LocalDate mindate, maxdate;
-
-
-    public App(String[] date1, String[] date2) {
-        this.mindate = dateParser(date1);
-        this.maxdate = dateParser(date2);
-    }
+    private LocalDate mindate, maxdate;
 
 
     private LocalDate dateParser(String[] strdate) {
@@ -19,23 +15,43 @@ public class App {
             return null;
         }
         LocalDate date;
+        int y = -1, m = -1, d = -1;
         try {
-            int y, m, d;
             y = Integer.parseInt(strdate[0]);
             m = Integer.parseInt(strdate[1]);
             d = Integer.parseInt(strdate[2]);
             date = LocalDate.of(y, m, d);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
+            if (y == -1) {
+                System.out.println("\nНеправильный ввод дня!");
+                return null;
+            }
+            if (m == -1) {
+                System.out.println("\nНеправильный ввод дня!");
+                return null;
+            }
+            if (d == -1) {
+                System.out.println("\nНеправильный ввод дня!");
+                return null;
+            }
+            return null;
+        } catch (DateTimeException e){
+            System.out.println("\nНеправильный ввод данных!");
             return null;
         }
         return date;
     }
 
 
-    public boolean checkTrueDates() {
-        if (this.mindate == null || this.maxdate == null)
-            return false;
-        return true;
+    public boolean getAndCheckFirstDate(String[] date) {
+        this.mindate = dateParser(date);
+        return !(this.mindate == null);
+    }
+
+
+    public boolean getAndCheckSecondDate(String[] date) {
+        this.maxdate = dateParser(date);
+        return !(this.maxdate == null);
     }
 
 
