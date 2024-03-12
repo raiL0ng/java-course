@@ -1,6 +1,5 @@
 package main.ru.sgu;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -12,6 +11,7 @@ public class App {
 
     private LocalDate dateParser(String[] strdate) {
         if (strdate.length != 3) {
+            System.out.println("Некорректный формат даты!");
             return null;
         }
         LocalDate date;
@@ -22,38 +22,39 @@ public class App {
             d = Integer.parseInt(strdate[2]);
             date = LocalDate.of(y, m, d);
         } catch (NumberFormatException e) {
-            if (y == -1) {
+            if (y == -1)
+                System.out.println("\nНеправильный ввод года!");
+            if (m == -1)
+                System.out.println("\nНеправильный ввод месяца!");
+            if (d == -1)
                 System.out.println("\nНеправильный ввод дня!");
-                return null;
-            }
-            if (m == -1) {
-                System.out.println("\nНеправильный ввод дня!");
-                return null;
-            }
-            if (d == -1) {
-                System.out.println("\nНеправильный ввод дня!");
-                return null;
-            }
             return null;
-        } catch (DateTimeException e){
-            System.out.println("\nНеправильный ввод данных!");
+        } catch (Exception e){
+            System.out.println("\nНекорректный формат даты!");
             return null;
         }
         return date;
     }
 
 
-    public boolean getAndCheckFirstDate(String[] date) {
+    public void setFirstDate(String[] date) {
         this.mindate = dateParser(date);
+    }
+
+
+    public boolean checkFirstDate() {
         return !(this.mindate == null);
     }
 
 
-    public boolean getAndCheckSecondDate(String[] date) {
+    public void setSecondDate(String[] date) {
         this.maxdate = dateParser(date);
-        return !(this.maxdate == null);
     }
 
+    
+    public boolean checkSecondDate() {
+        return !(this.maxdate == null);
+    }
 
     public long getResult() {
         return Math.abs(ChronoUnit.DAYS.between(this.mindate, this.maxdate));

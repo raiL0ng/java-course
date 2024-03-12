@@ -17,12 +17,14 @@ public class Main {
                 App a = new App();
                 System.out.println("Введите даты в формате \"год месяц день\":\nПервая дата:");
                 String[] date1 = in.nextLine().split(" ");
-                if (!a.getAndCheckFirstDate(date1)) {
+                a.setFirstDate(date1);
+                if (!a.checkFirstDate()) {
                     continue;
                 }
                 System.out.println("Вторая дата:");
                 String[] date2 = in.nextLine().split(" ");
-                if (!a.getAndCheckSecondDate(date2)) {
+                a.setSecondDate(date2);
+                if (!a.checkFirstDate()) {
                     continue;
                 }
                 long ans = a.getResult();
