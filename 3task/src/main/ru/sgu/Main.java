@@ -26,12 +26,7 @@ public class Main {
                 String path = in.next();
                 System.out.print("Введите имя целевой строки: ");
                 String target = in.next();
-                Bpp b = new Bpp(path, target);
-                if (b.dirValidalityCheck()) {
-                    System.out.println("Начало архивации...");
-                    b.run();
-                    System.out.println("Архивация прошла успешно");
-                }
+                new Bpp(path, target).run();
             }
             else if (bl.equals("3")) {
                 in.close();

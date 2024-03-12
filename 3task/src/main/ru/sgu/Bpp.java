@@ -19,15 +19,6 @@ public class Bpp {
     }
 
 
-    public boolean dirValidalityCheck() {
-        if (!workingDir.isDirectory()) {
-            System.out.printf("Директории `%s` не существует или неверно указан к ней путь%n", workingDir);
-            return false;
-        }
-        return true;
-    }
-
-
     private boolean isCorrectName(File file) {
         return file.getName().toLowerCase().contains(target.toLowerCase());
     }
@@ -59,14 +50,19 @@ public class Bpp {
         }
     }
 
-    public boolean run() {
+    public void run() {
+        if (!this.workingDir.isDirectory()) {
+            System.out.printf("Директории `%s` не существует или неверно указан к ней путь%n", this.workingDir);
+            return;
+        } 
+        System.out.println("\nНачало архивации...");
         try (FileOutputStream fout = new FileOutputStream("%s.7z".formatted(this.workingDir.getName()));
              ZipOutputStream zout = new ZipOutputStream(fout)) {
             runZip(zout, workingDir, "");
         } catch (IOException e) {
             System.out.printf("Не удалось создать архив %s.7z%n", workingDir.getName());
-            return false;
+            return;
         }
-        return true;
+        System.out.println("Архивация прошла успешно");
     }
 }
