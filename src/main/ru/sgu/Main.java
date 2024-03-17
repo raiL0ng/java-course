@@ -39,7 +39,7 @@ public class Main {
                 int pn = in.nextInt();
                 System.out.print("Введите количество покупателей: ");
                 int cn = in.nextInt();
-                System.out.print("Установите время работы очереди: ");
+                System.out.print("Установите время работы очереди (в секундах): ");
                 int d = in.nextInt();
                 Cpp c = new Cpp(pn, cn, d);
                 if (c.checkValues()) {

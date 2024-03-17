@@ -14,7 +14,7 @@ public class App {
         @Override
         public void run() {
             for (int i = 0; i < N; i++) {
-                synchronized (App.class) {
+                synchronized (incrementalNumber) {
                     incrementalNumber = incrementalNumber.add(BigDecimal.ONE);
                 }
                 // setNumberValue();
@@ -44,7 +44,7 @@ public class App {
     }
 
     public void setNumberValue() {
-        synchronized (App.class) {
+        synchronized (incrementalNumber) {
             System.out.println("Поток " + Thread.currentThread().getName() +
                                " изменил значение переменной: " + this.incrementalNumber);
         }
