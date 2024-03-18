@@ -13,12 +13,10 @@ public class App {
 
         @Override
         public void run() {
-            for (int i = 0; i < N; i++) {
-                synchronized (incrementalNumber) {
+            synchronized (this) {
+                for (int i = 0; i < N; i++) {
                     incrementalNumber = incrementalNumber.add(BigDecimal.ONE);
                 }
-                // setNumberValue();
-
             }
         }
     }
@@ -28,8 +26,9 @@ public class App {
     }
 
     public void run() {
-        Thread t1 = new Thread(new Inc());
-        Thread t2 = new Thread(new Inc());
+        Inc inc = new Inc();
+        Thread t1 = new Thread(inc);
+        Thread t2 = new Thread(inc);
         
         t1.start();
         t2.start();
@@ -41,13 +40,6 @@ public class App {
             System.out.println("Что-то пошло не так..." + e.getMessage());
         }
         System.out.println("Конечное значение переменной: " + this.incrementalNumber);
-    }
-
-    public void setNumberValue() {
-        synchronized (incrementalNumber) {
-            System.out.println("Поток " + Thread.currentThread().getName() +
-                               " изменил значение переменной: " + this.incrementalNumber);
-        }
     }
 }
 
