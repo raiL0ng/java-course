@@ -2,7 +2,7 @@ package main.ru.sgu;
 
 import java.util.Objects;
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
     private String firstName;
     private String lastName;
     private String position;
@@ -49,6 +49,16 @@ public class Employee {
 
 
     @Override
+    public int compareTo(Employee emp) {
+        if (this.salary > emp.salary) 
+            return 1;
+        else if (this.salary < emp.salary)
+            return -1;
+        return 0;
+    }
+
+
+    @Override
     public int hashCode() {
         return Objects.hash(firstName, lastName, position, salary);
     }
@@ -63,4 +73,5 @@ public class Employee {
                 ", salary=" + salary +
                 '}';
     }
+
 }
