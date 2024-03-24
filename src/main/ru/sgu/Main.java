@@ -1,5 +1,6 @@
 package main.ru.sgu;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Main {
@@ -60,25 +61,38 @@ public class Main {
         System.out.println(c.toString());
     
         ArrayList<CommonInformation> deps = c.getDepartments();
-        System.out.println("Сравнение двух IT-отделов: " + deps.get(0).equals(deps.get(1)));
+        System.out.println("\nСравнение двух IT-отделов: " + deps.get(0).equals(deps.get(1)));
 
-        System.out.println("Хеш-коды отделов:" );
+        System.out.println("\nХеш-коды отделов:" );
         for (CommonInformation el : deps) {
             System.out.println(el.getNameOfDepartment() + ": " + el.hashCode());
         }
 
-        System.out.println("Сравнение отделов осуществляется по количеству сотрудников");
+        System.out.println("\nСравнение отделов осуществляется по количеству сотрудников");
         System.out.println("Количество сотрудников:" );
         for (CommonInformation el : deps) {
-            System.out.println(el.getTotalEmployeeNumber());
+            System.out.println(el.getNameOfDepartment() + ": " + el.getTotalEmployeeNumber());
         }
 
-        System.out.println("Сравнение IT-отделов: " + deps.get(0).compareTo(deps.get(1)));
-        System.out.println("Назначение отделов:" );
+        System.out.println("\nСравнение IT-отделов: " + deps.get(0).compareTo(deps.get(1)));
+        System.out.println("Сравнение отдела технической поддрежки и IT-отдела №1: " + 
+                           deps.get(3).compareTo(deps.get(1)));
+        
+        System.out.println("\nНазначение отделов:" );
         for (CommonInformation el : deps) {
             System.out.println(el.toString());
         }
 
+
+        System.out.println("\nВыплата зарплаты сотрудникам каждого отдела:" );
+        BigDecimal sum = new BigDecimal(0);
+        for (CommonInformation el : deps) {
+            sum = sum.add(el.getTotalSalary());
+            System.out.println(el.getNameOfDepartment() + ": " + el.getTotalSalary());
+        }
+        System.out.println("Суммарная выплата: " + sum);
+        
+        
     }
     public static void main(String[] args) throws Exception {
         new Main().run();

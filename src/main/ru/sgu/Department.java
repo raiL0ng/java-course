@@ -8,9 +8,11 @@ interface CommonInformation {
 
     public String getNameOfDepartment();
 
-    public BigDecimal getTotalSalary(); 
+    BigDecimal getTotalSalary(); 
 
-    public int getTotalEmployeeNumber();
+    int getTotalEmployeeNumber();
+
+    public int compareTo(CommonInformation obj);
 
 }
 
@@ -19,11 +21,11 @@ abstract public class Department {
     protected String name;
     protected ArrayList<Employee> employees;
 
+
     public Department(String name) {
         this.name = name;
     }
 
-    
     public abstract void addEmployee(Employee employee);
 
 

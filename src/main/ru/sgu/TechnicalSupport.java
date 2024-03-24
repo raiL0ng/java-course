@@ -13,6 +13,7 @@ public class TechnicalSupport extends Department implements Comparable<CommonInf
         employees = new ArrayList<>();
     }
 
+    @Override
     public String getNameOfDepartment() {
         return this.name;
     }
@@ -33,7 +34,7 @@ public class TechnicalSupport extends Department implements Comparable<CommonInf
     public BigDecimal getTotalSalary() {
         BigDecimal totalSalary = new BigDecimal(0);
         for (Employee employee : employees) {
-            totalSalary.add(new BigDecimal(employee.getSalary()));
+            totalSalary = totalSalary.add(new BigDecimal(employee.getSalary()));
         }
         return totalSalary;
     }
@@ -52,27 +53,10 @@ public class TechnicalSupport extends Department implements Comparable<CommonInf
         return Objects.equals(this.name, prod.name);
     }
 
-    // @Override
-    // public int compareTo(CommonInformation obj) {
-    //     if (obj instanceof ITDepartment) {
-    //         ITDepartment itd = (ITDepartment) obj;
-    //         return Integer.compare(getTotalEmployeeNumber(), itd.getTotalEmployeeNumber());
-    //     }
-    //     if (obj instanceof TechnicalSupport) {
-    //         TechnicalSupport ts = (TechnicalSupport) obj;
-    //         return Integer.compare(getTotalEmployeeNumber(), ts.getTotalEmployeeNumber());
-    //     }
-    //     if (obj instanceof ProductionHall) {
-    //         ProductionHall ph = (ProductionHall) obj;
-    //         return Integer.compare(getTotalEmployeeNumber(), ph.getTotalEmployeeNumber());
-    //     }
 
-        
-    //     return 0;
-    // }
     @Override
     public int compareTo(CommonInformation obj) {
-        return Integer.compare(getTotalEmployeeNumber(), obj.getTotalEmployeeNumber());
+        return this.getNameOfDepartment().compareTo(obj.getNameOfDepartment());
     }
 
 
@@ -84,6 +68,6 @@ public class TechnicalSupport extends Department implements Comparable<CommonInf
 
     @Override
     public String toString() {
-        return "В отделе `" + this.name + "` оказывают техническую поддержку%n";
+        return "В отделе `" + this.name + "` оказывают техническую поддержку\n";
     }
 }

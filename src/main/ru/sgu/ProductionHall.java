@@ -15,7 +15,7 @@ public class ProductionHall extends Department implements Comparable<CommonInfor
         this.product = product;
     }
 
-    
+    @Override
     public String getNameOfDepartment() {
         return this.name;
     }
@@ -39,7 +39,7 @@ public class ProductionHall extends Department implements Comparable<CommonInfor
     public BigDecimal getTotalSalary() {
         BigDecimal totalSalary = new BigDecimal(0);
         for (Employee employee : employees) {
-            totalSalary.add(new BigDecimal(employee.getSalary()));
+            totalSalary = totalSalary.add(new BigDecimal(employee.getSalary()));
         }
         return totalSalary;
     }
@@ -61,9 +61,8 @@ public class ProductionHall extends Department implements Comparable<CommonInfor
 
     @Override
     public int compareTo(CommonInformation obj) {
-        return Integer.compare(getTotalEmployeeNumber(), obj.getTotalEmployeeNumber());
+        return this.getNameOfDepartment().compareTo(obj.getNameOfDepartment());
     }
-
 
 
     @Override
@@ -74,7 +73,7 @@ public class ProductionHall extends Department implements Comparable<CommonInfor
 
     @Override
     public String toString() {
-        return "В отделе `" + this. name + "` производят" + this.product + " %n";
+        return "В отделе `" + this. name + "` производят " + this.product + "\n";
     }
 
 }

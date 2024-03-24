@@ -14,6 +14,7 @@ public class ITDepartment extends Department implements Comparable<CommonInforma
         this.product = product;
     }
 
+    @Override
     public String getNameOfDepartment() {
         return this.name;
     }
@@ -35,7 +36,7 @@ public class ITDepartment extends Department implements Comparable<CommonInforma
     public BigDecimal getTotalSalary() {
         BigDecimal totalSalary = new BigDecimal(0);
         for (Employee employee : employees) {
-            totalSalary.add(new BigDecimal(employee.getSalary()));
+            totalSalary = totalSalary.add(new BigDecimal(employee.getSalary()));
         }
         return totalSalary;
     }
@@ -57,7 +58,7 @@ public class ITDepartment extends Department implements Comparable<CommonInforma
 
     @Override
     public int compareTo(CommonInformation obj) {
-        return Integer.compare(getTotalEmployeeNumber(), obj.getTotalEmployeeNumber());
+        return this.getNameOfDepartment().compareTo(obj.getNameOfDepartment());
     }
 
 
@@ -70,8 +71,8 @@ public class ITDepartment extends Department implements Comparable<CommonInforma
 
     @Override
     public String toString() {
-        return "В отделе `" + this.name + "` разрабатывают" + 
-               this.product + " и пьют чай с пончиками%n";
+        return "В отделе `" + this.name + "` разрабатывают " + 
+               this.product + " и пьют чай с пончиками\n";
     }
 
 }
