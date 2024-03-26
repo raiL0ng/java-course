@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class TechnicalSupport extends Department implements Comparable<CommonInformation>, CommonInformation {
+public class TechnicalSupport extends Department implements CommonInformation {
     
     private ArrayList<Employee> employees;
 

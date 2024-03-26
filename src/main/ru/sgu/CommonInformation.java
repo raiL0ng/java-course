@@ -2,7 +2,7 @@ package main.ru.sgu;
 
 import java.math.BigDecimal;
 
-interface CommonInformation {
+interface CommonInformation extends Comparable<CommonInformation> {
 
     public String getNameOfDepartment();
 
