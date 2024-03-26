@@ -42,17 +42,6 @@ public class Main {
 
     public void run() {
         Main m = new Main();
-        // ITDepartment itd1 = m.getITDepartment("IT-отдел №1", "приложение по автоматизации создания скрепок");
-        // ITDepartment itd2 = m.getITDepartment("IT-отдел №2", "новые коробки для скрепок");
-        // TechnicalSupport ts1 = m.getTechnicalSupport("Тех. поддержка");
-        // TechnicalSupport ts2 = m.getTechnicalSupport("Тех. поддержка");
-        // ProductionHall ph = m.getProductionHall("Производственный цех", "высококачественный скрепки");
-        // ArrayList<CommonInformation> deps = new ArrayList<>();
-        // deps.add(itd1);
-        // deps.add(itd2);
-        // deps.add(ph);
-        // deps.add(ts1);
-        // deps.add(ts2);
         Company c = new Company("ИП Скрепочкина");
         c.addDepartment(m.getITDepartment("IT-отдел №1", "приложение по автоматизации создания скрепок"));
         c.addDepartment(m.getITDepartment("IT-отдел №2", "новые коробки для скрепок"));
